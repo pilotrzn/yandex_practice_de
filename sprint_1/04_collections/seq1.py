@@ -7,7 +7,7 @@ def compare_sequences(seq1, seq2):
     elif seq1 < seq2:
         return f'Список {seq2} больше.'
     else:
-        return 'Списки равны'
+        return 'Списки равны.'
 
 
 print(compare_sequences(sequence_1,sequence_2))

@@ -1,4 +1,3 @@
-# Пропишите нужные импорты.
 from datetime import datetime as dt, time as t, timedelta as td,date as d
 
 # Напишите код функции, следуя плану из задания.
@@ -12,11 +11,11 @@ def get_results(leader, participant):
     else:
         hours = int(diff // (60 * 60))
         diff_format =  t(hours % 24, int(diff // 60) % 60, int(diff % 60))
-        print (diff_format)
         mes = str(hours) + ':' + diff_format.strftime("%M:%S")
-        print('Вы пробежали за {0} с отставанием от лидера {1}'.format(leader,mes))
+        print('Вы пробежали за {0} с отставанием от лидера {1}'.format(participant,mes))
+
 
 
 # Проверьте работу программы, можете подставить свои значения.
-get_results('02:02:02', '02:02:02')
+get_results('03:03:03', '03:03:03')
 get_results('02:02:02', '03:04:05')
