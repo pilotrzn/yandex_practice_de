@@ -5,7 +5,6 @@ def assess_yield(number_of_plants, average_weight):
     # Ваш код здесь
     d_av_weight = Decimal(str(average_weight))
     full_weight = d_av_weight * number_of_plants / 1000
-    mes = ''
 
     if full_weight > 100:
         mes = 'Ожидается отличный урожай.'
