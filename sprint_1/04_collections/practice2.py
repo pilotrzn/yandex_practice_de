@@ -1,9 +1,9 @@
 def get_stickers_comparison(collection_1,collection_2):
-    s_col1 = set(collection_1)
-    s_col2 = set(collection_2)
-    s_unique_col1 = s_col1 - s_col2
-    s_unique_col2 = s_col2 - s_col1   
-    common_col = s_col1 & s_col2
+    # s_col1 = set(collection_1)
+    # s_col2 = set(collection_2)
+    s_unique_col1 = set(collection_1) - set(collection_2)
+    s_unique_col2 = set(collection_2) - set(collection_1)  
+    common_col = set(collection_1) & set(collection_2)
     return sorted(s_unique_col1), sorted(s_unique_col2), sorted(common_col)
 
 # Списки стикеров:
