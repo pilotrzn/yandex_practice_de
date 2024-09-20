@@ -6,7 +6,7 @@ def get_results(leader, participant):
     t_partic = dt.strptime(participant,'%H:%M:%S')
     diff = (t_partic - t_lead).total_seconds()
 
-    if diff == 0:
+    if diff <= 0:
         print('Вы пробежали за {0} и победили!'.format(participant))
     else:
         hours = int(diff // (60 * 60))
@@ -19,3 +19,4 @@ def get_results(leader, participant):
 # Проверьте работу программы, можете подставить свои значения.
 get_results('03:03:03', '03:03:03')
 get_results('02:02:02', '03:04:05')
+get_results('02:02:02', '02:00:05')

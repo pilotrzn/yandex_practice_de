@@ -1,13 +1,11 @@
 # imports
-from datetime import datetime as dt, timedelta as tdlt,date
+from datetime import datetime as dt,date
 from decimal import Decimal as dec, getcontext
 getcontext().prec = 3
 
 
 # constants
 DATE_FORMAT = '%Y-%m-%d'
-STR_SPLITTER = '; '
-STR_NOTE = 'Яйца перепелиные; 10; 2024-10-01'
 # vars
 goods = {}
 
@@ -23,27 +21,21 @@ def add(items, title, amount, expiration_date=None):
     else:
         items[title].append(dict_properties)
 
-def add_by_note2(items, note):
+
+def add_by_note(items, note):
     splitstr = note.split()
-    check_value = splitstr[len(splitstr)-1]
+    # По-умолчанию делаем, будто не указана дата
+    s_date = None
+    len_str = len(splitstr) - 1
 
     try:
-        res = bool(dt.strptime(check_value, DATE_FORMAT).date())
+        bool(dt.strptime(splitstr[len_str], DATE_FORMAT).date())
+        s_date = splitstr[len_str]
+        len_str = len(splitstr) - 2 # Если есть дата, то количество - предпоследний элемент
     except ValueError:
-        res = False
+        False
 
-    if res:
-        s_date = check_value
-        cnt = splitstr[len(splitstr)-2]
-        splitstr.pop(len(splitstr)-1)
-        splitstr.pop(len(splitstr)-1)
-    else:
-        cnt = splitstr[len(splitstr)-1]
-        splitstr.pop(len(splitstr)-1)
-        s_date = None
-
-    title = ' '.join(splitstr)   
-    add(items, title, cnt, s_date)
+    add(items, ' '.join(splitstr[:len_str]), splitstr[len_str], s_date)
     print(items)
 
 
@@ -63,6 +55,7 @@ def amount(items, needle):
 def expire(items, in_advance_days=0):
     expire_product = []
     d_today = date.today()
+    
     for title in items:
         sum_expired = 0
         for item in items[title]:           
@@ -85,17 +78,15 @@ add(goods, 'Продукт_2', 10, '2024-09-19' )
 add(goods, 'Продукт_3', 3, '2024-09-18' )
 add(goods, 'Продукт_4', 5, '2024-11-10' )
 
-# add_by_note(goods, STR_NOTE)
+print(goods)
 
-# print(goods)
+print(find(goods,'яйц'))
 
-# print(find(goods,'яйц'))
+print(amount(goods,'яйц'))
 
-# print(amount(goods,'яйц'))
-
-# print(amount(goods,'x'))
+print(amount(goods,'x'))
 print(expire(goods))
 
-# add_by_note2({},'Яйца гусиные №1 4 2024-11-10')
-# add_by_note2({},'Яйца гусиные №1 1.5')
+add_by_note({},'Яйца гусиные №1 4 2024-11-10')
+add_by_note({},'Яйца гусиные №1 1.5')
 # print(goods)
