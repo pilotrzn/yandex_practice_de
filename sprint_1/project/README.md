@@ -39,6 +39,9 @@ def add_by_note(items, note):
         len_str = len(splitstr) - 2 # Если есть дата, то количество - предпоследний элемент
     except ValueError:
         False
+
+    add(items, ' '.join(splitstr[:len_str]), splitstr[len_str], s_date)
+    print(items)
 ```
 
 ### function find
