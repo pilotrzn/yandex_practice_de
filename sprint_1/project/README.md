@@ -1,6 +1,7 @@
 # Проект холодильник с описанием функций
 
 * [Python code](refrigerator.py)
+* [Блок импорта и объявления переменных и констант](#imports-and-variables)
 * [Функция добавления продуктов в холодильник](#function-add)
 * [Функция добавления продукта из строки](#function-add_by_note)
 * [Функция поиска продукта по наименованию или части слова](#function-find)
@@ -8,6 +9,22 @@
 * [Функция поиска просроченных продуктов](#function-expire)
 * [Тест программы](#tests)
 
+---
+
+
+### imports and variables
+
+```
+# imports
+from datetime import datetime as dt,date
+from decimal import Decimal as dec, getcontext
+getcontext().prec = 3
+
+# constants
+DATE_FORMAT = '%Y-%m-%d'
+# vars
+goods = {}
+```
 
 ### function add
 
