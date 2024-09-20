@@ -26,16 +26,16 @@ def add_by_note(items, note):
     splitstr = note.split()
     # По-умолчанию делаем, будто не указана дата
     s_date = None
-    len_str = len(splitstr) - 1
+    len_splitstr = len(splitstr) - 1
 
     try:
-        bool(dt.strptime(splitstr[len_str], DATE_FORMAT).date())
-        s_date = splitstr[len_str]
-        len_str = len(splitstr) - 2 # Если есть дата, то количество - предпоследний элемент
+        bool(dt.strptime(splitstr[len_splitstr], DATE_FORMAT).date())
+        s_date = splitstr[len_splitstr]
+        len_splitstr = len(splitstr) - 2 # Если есть дата, то количество - предпоследний элемент
     except ValueError:
         False
 
-    add(items, ' '.join(splitstr[:len_str]), splitstr[len_str], s_date)
+    add(items, ' '.join(splitstr[:len_splitstr]), splitstr[len_splitstr], s_date)
     print(items)
 
 
