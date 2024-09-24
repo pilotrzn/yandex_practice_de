@@ -1,39 +1,39 @@
-# imports
-from datetime import datetime as dt,date
+from datetime import datetime , date
 from decimal import Decimal as dec, getcontext
-import functions as func
 
 
-getcontext().prec = 3
-
-
-# constants
 DATE_FORMAT = '%Y-%m-%d'
-# vars
-goods = {}
 
 
-def add(items, title, amount, expiration_date = None):
-    dt_exp_date = dt.strptime(expiration_date, DATE_FORMAT).date() if expiration_date else expiration_date
-    
+def test_add(items, title, amount, expiration_date = None):
+    expiration = datetime.date(datetime.strptime(expiration_date, DATE_FORMAT)) #преобразем в дате в формат datetime и в формат date   
+    if title not in  items:
+        items[title] = [{'amount': amount, 'expiration_date': expiration}] # Добавляем в items title если его нет
+    else:
+        items[title].append ([{'amount': amount, 'expiration_date': expiration}]) #Применить append для добавления словаря с ключами 'amount' и 'expiration_date' в список для конкретного title.
+
+
+def add(items: dict, title: str, amount: dec, expiration_date: str = None):
+    dt_exp_date = datetime.strptime(expiration_date, DATE_FORMAT).date() if expiration_date else expiration_date
     dict_properties = {
         'amount': dec(str(amount)), # Привожу через str, чтобы не получать приближенное число, типа 0.49999000000....
         'expiration_date': dt_exp_date
     }
+
     if title not in items:
         items[title] = [dict_properties]
     else:
         items[title].append(dict_properties)
 
 
-def add_by_note(items, note):
+def add_by_note(items: dict, note: str):
     splitstr = note.split()
     # По-умолчанию делаем, будто не указана дата
     s_date = None
     len_splitstr = len(splitstr) - 1
 
     try:
-        bool(dt.strptime(splitstr[len_splitstr], DATE_FORMAT).date())
+        bool(datetime.strptime(splitstr[len_splitstr], DATE_FORMAT).date())
         s_date = splitstr[len_splitstr]
         len_splitstr = len(splitstr) - 2 # Если есть дата, то количество - предпоследний элемент
     except ValueError:
@@ -43,11 +43,11 @@ def add_by_note(items, note):
     print(items)
 
 
-def find(items, needle):
+def find(items: dict, needle: str):
     return [ value for value in items.keys() if value.lower().count(needle.lower()) > 0 ]
-    
 
-def amount(items, needle):
+    
+def amount(items: dict, needle: str):
     sum_amount = 0
     # Поиск продукта
     titles = find(items, needle)
@@ -57,10 +57,10 @@ def amount(items, needle):
     return dec(sum_amount)
 
 
-def expire(items, in_advance_days=0):
+def expire(items: dict, in_advance_days: int = 0):
     expire_product = []
     d_today = date.today()
-
+    
     for title in items:
         sum_expired = 0
         for item in items[title]:           
@@ -71,29 +71,4 @@ def expire(items, in_advance_days=0):
             expire_product.append((title,sum_expired))     
     return expire_product
 
-# add(goods, 'Пельмени универсальные', 2, '2024-10-10')
-# add(goods, 'Вода', 0.5)
-# add(goods, 'Яйца куриные', 20, '2024-09-16')
-# add(goods, 'Яйца куриные', 10, '2024-09-16')
-# add(goods, 'Яйца куриные', 4, '2024-09-17')
-# add(goods, 'Пельмени универсальные', 0.5, '2025-01-10')
-# add(goods, 'Яйца перепелиные', 10, '2024-09-20')
-# add(goods, 'Колбаса', 0.60, '2024-09-24')
-# add(goods, 'Продукт_1', 12, '2024-09-17' )
-# add(goods, 'Продукт_2', 10, '2024-09-19' )
-# add(goods, 'Продукт_3', 3, '2024-09-18' )
-# add(goods, 'Продукт_4', 5, '2024-11-10' )
 
-# print(goods)
-
-# print(find(goods,'яйц'))
-
-# print(amount(goods,'яйц'))
-
-# print(amount(goods,'x'))
-# print(expire(goods))
-
-add_by_note({},'Яйца гусиные №1 4 2024-11-10')
-add_by_note({},'Яйца гусиные №1 1.5')
-add_by_note({},'Яйца гусиные 10 2024-11-12')
-# print(goods)
