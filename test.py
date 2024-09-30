@@ -1,26 +1,22 @@
+def get_full_name(data):
+    """
+    Возвращает строку, содержащую имя и фамилию пользователя.
+    """
+    return data['first_name'] + ' ' + data['last_name']
 
-from decimal import Decimal, getcontext
-from math import pi
 
-pi = Decimal(str(pi))
-getcontext().prec = 10
+def has_full_access(data):
+    """
+    Возвращает True, если возраст пользователя не меньше 18 лет.
+    """
+    return data['age'] < 18
 
-def ellipse_area(large_os, small_os):
-    # номер ячейки в памяти
-    print(id(small_os))
-    # меняем значение
-    small_os = large_os * 2
-    # номер ячейки в памяти
-    print(id(small_os), small_os)
-    return pi * large_os * small_os
 
-large_os = Decimal('2.5')
-small_os = Decimal('1.75')
-depth = Decimal('0.35')
+user_info = {'first_name': 'Алёна', 'last_name': 'Петрова', 'age': 25}
+full_name = get_full_name(user_info)
+print(f'Здравствуйте, {full_name}')
 
-area = ellipse_area(large_os,small_os)
-vol = area * depth
-print('Площадь эллипса:', area, 'кв.м.')
-print('Объем воды для наполнения пруда:',vol,'куб.м.')
-# значения не поменялись
-print(small_os,large_os)
+if has_full_access(user_info) is True:
+    print('Вам есть 18 лет и у вас есть доступ ко всем возможностям сайта.')
+else:
+    print('Вам нет 18 лет, ваш доступ ограничен.')

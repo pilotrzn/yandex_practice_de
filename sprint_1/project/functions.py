@@ -1,15 +1,24 @@
-from datetime import datetime , date
+from datetime import datetime, date
 from decimal import Decimal as dec
 
 
 DATE_FORMAT = '%Y-%m-%d'
+KEY_AMOUNT = 'amount'
+KEY_EXPIRATION = 'expiration_date'
 
 
-def add(items: dict, title: str, amount: dec, expiration_date: str = None):
-    dt_exp_date = datetime.strptime(expiration_date, DATE_FORMAT).date() if expiration_date else expiration_date
+def check_date(var_date: str):
+    result = None
+    if var_date != '':
+        result = datetime.strptime(var_date, DATE_FORMAT).date()
+    return result
+
+
+def add(items: dict, title: str, amount: str, expiration_date: str = ''):
+    dt_exp_date = check_date(expiration_date)
     dict_properties = {
-        'amount': amount, 
-        'expiration_date': dt_exp_date
+        KEY_AMOUNT: amount,
+        KEY_EXPIRATION: dt_exp_date
     }
     if title not in items:
         items[title] = [dict_properties]
@@ -22,59 +31,54 @@ def add_by_note(items: dict, note: str):
     # По-умолчанию делаем, будто не указана дата
     s_date = None
     len_splitstr = len(splitstr) - 1
-
     try:
         bool(datetime.strptime(splitstr[len_splitstr], DATE_FORMAT).date())
         s_date = splitstr[len_splitstr]
-        len_splitstr = len(splitstr) - 2 # Если есть дата, то количество - предпоследний элемент
+        len_splitstr = len(splitstr) - 2
     except ValueError:
         False
-
-    add(items, ' '.join(splitstr[:len_splitstr]), splitstr[len_splitstr], s_date)
+    count = splitstr[len_splitstr]
+    add(items, ' '.join(splitstr[:len_splitstr]), count, str(s_date))
     print(items)
 
 
 def find(items: dict, needle: str):
-    return [ value for value in items.keys() if value.lower().count(needle.lower()) > 0 ]
+    n_l = needle.lower()
+    return [value for value in items.keys() if value.lower().count(n_l) > 0]
 
-    
-def amount(items: dict, needle: str):
+
+def amount(items: dict, needle: str) -> dec:
     sum_amount = 0
     # Поиск продукта
     titles = find(items, needle)
     for title in titles:
         for item in items[title]:
-            sum_amount += item['amount']
-
+            sum_amount += item[KEY_AMOUNT]
     return dec(sum_amount)
 
-def amount2(items, needle):
-    total_amount = 0 
-    titles_find = find(items, needle)
 
+def amount2(items, needle):
+    total_amount = 0
+    titles_find = find(items, needle)
     if len(titles_find) == 0:
         return dec(total_amount)
-    
     for title in items:
         if title in titles_find:
             title_values = dict.get(items, title)
-            print(title_values)
-        
             for every_dict in title_values:
-                total_amount += every_dict['amount']
-                
+                total_amount += every_dict[KEY_AMOUNT]
     return dec(total_amount)
 
 
-def expire(items: dict, in_advance_days: int = 0):
+def expire(items: dict, in_advance_days: int = 0) -> list:
     expire_product = []
+    tday = date.today()
     for title in items:
         sum_expired = 0
-        for item in items[title]:           
-            if item['expiration_date'] and (item['expiration_date'] - date.today()).days <= in_advance_days:
-                    sum_expired += item['amount']
-        if sum_expired != 0:
-            expire_product.append((title,sum_expired))     
+        for item in items[title]:
+            if item[KEY_EXPIRATION]:
+                if (item[KEY_EXPIRATION] - tday).days <= in_advance_days:
+                    sum_expired += item[KEY_AMOUNT]
+            if sum_expired != 0:
+                expire_product.append((title, sum_expired))
     return expire_product
-
-

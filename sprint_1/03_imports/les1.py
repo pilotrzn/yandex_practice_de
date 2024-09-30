@@ -9,12 +9,14 @@ pi = Decimal(str(pi))
 # Установите необходимую точность для вычислений.
 getcontext().prec = 10
 
+
 # Объявите функцию ellipse_area() с двумя параметрами.
 def ellipse_area(large_os, small_os):
     print(pi)
     return pi * large_os * small_os
 
-# Объявите три переменные типа Decimal - 
+
+# Объявите три переменные типа Decimal
 # они должны хранить длины полуосей эллипса и глубину пруда.
 l_os = 2.5
 s_os = 1.75
@@ -23,10 +25,11 @@ small_os = Decimal(str(s_os))
 depth = Decimal('0.35')
 print(type(s_os), type(small_os), pi * l_os)
 
-# Вызовите функцию ellipse_area(), в аргументах передайте длины полуосей эллипса.
-area = ellipse_area(large_os,small_os)
+# Вызовите функцию ellipse_area(),
+# в аргументах передайте длины полуосей эллипса.
+area = ellipse_area(large_os, small_os)
 
 # Вычислите объём пруда: площадь * глубина.
 vol = area * depth
 print('Площадь эллипса:', area, 'кв.м.')
-print('Объем воды для наполнения пруда:',vol,'куб.м.')
+print('Объем воды для наполнения пруда:', vol, 'куб.м.')
