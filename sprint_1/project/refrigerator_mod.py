@@ -1,12 +1,12 @@
 # imports
 import functions as func
-import json
 
 
 # constants
 DATE_FORMAT = '%Y-%m-%d'
 # vars
 goods: dict = {}
+
 
 # func.add(goods, 'Пельмени универсальные', '2', '2024-10-10')
 func.add(goods, 'Вода', '0.5')
@@ -22,6 +22,7 @@ func.add(goods, 'Продукт_2', '10', '2024-09-19')
 func.add(goods, 'Продукт_3', '3' '2024-09-18')
 func.add(goods, 'Продукт_4', '5', '2024-11-10')
 
+func.export_to_json(goods)
 # print(goods)
 
 # print(func.find(goods,'колб'))
@@ -31,6 +32,4 @@ func.add(goods, 'Продукт_4', '5', '2024-11-10')
 # print(func.expire(goods, 4))
 # func.add_by_note({},'Яйца гусиные №1 4 2024-11-10')
 # func.add_by_note(goods,'Яйца гусиные №1 1.5')
-# print(goods)
-jsondata = json.dumps(goods, ensure_ascii=False, default=str, indent=2)
-print(jsondata)
+

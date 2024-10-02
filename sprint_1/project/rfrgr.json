@@ -1,0 +1,68 @@
+{
+ "Вода": [
+  {
+   "amount": "0.5",
+   "expiration_date": null
+  },
+  {
+   "amount": "1.6",
+   "expiration_date": null
+  }
+ ],
+ "Яйца куриные": [
+  {
+   "amount": "20",
+   "expiration_date": "2024-09-16"
+  },
+  {
+   "amount": "10",
+   "expiration_date": "2024-09-16"
+  },
+  {
+   "amount": "4",
+   "expiration_date": "2024-09-17"
+  }
+ ],
+ "Пельмени универсальные": [
+  {
+   "amount": "0.5",
+   "expiration_date": "2025-01-10"
+  }
+ ],
+ "Яйца перепелиные": [
+  {
+   "amount": "10",
+   "expiration_date": "2024-09-20"
+  }
+ ],
+ "Колбаса": [
+  {
+   "amount": "0.6",
+   "expiration_date": "2024-09-24"
+  }
+ ],
+ "Продукт_1": [
+  {
+   "amount": "12",
+   "expiration_date": "2024-09-17"
+  }
+ ],
+ "Продукт_2": [
+  {
+   "amount": "10",
+   "expiration_date": "2024-09-19"
+  }
+ ],
+ "Продукт_3": [
+  {
+   "amount": "32024-09-18",
+   "expiration_date": null
+  }
+ ],
+ "Продукт_4": [
+  {
+   "amount": "5",
+   "expiration_date": "2024-11-10"
+  }
+ ]
+}

@@ -15,14 +15,15 @@ def calc(your_number: float) -> Optional[str]:
         calc_square = None
     else:
         calc_square = calculate_square_root(your_number)
+
     return str.format('Мы вычислили квадратный корень из '
                       'введённого вами числа. '
                       'Это будет: {}', calc_square)
 
 
-var1 = 10
+v = 10
 var2 = 5
 
-print('Сумма чисел: ', add_numbers(var1, var2))
+print('Сумма чисел: ', add_numbers(v, var2))
 
 print(calc(0))

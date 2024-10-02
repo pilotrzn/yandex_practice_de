@@ -1,5 +1,7 @@
 from datetime import datetime, date
 from decimal import Decimal as dec
+from pathlib import Path
+import json
 
 
 DATE_FORMAT = '%Y-%m-%d'
@@ -82,3 +84,11 @@ def expire(items: dict, in_advance_days: int = 0) -> list:
             if sum_expired != 0:
                 expire_product.append((title, sum_expired))
     return expire_product
+
+
+def export_to_json(items: dict):
+    workfolder = Path('.').joinpath('yandex_pract').joinpath('sprint_1')
+    file_path = Path(workfolder).joinpath('project').joinpath('rfrgr.json')
+    jsondata = json.dumps(items, ensure_ascii=False, default=str, indent=1)
+    with open(file_path, 'w') as result:
+        result.write(jsondata)
