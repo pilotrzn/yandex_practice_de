@@ -1,11 +1,11 @@
 # Вместо многоточия укажите нужные параметры.
-def find_pool_capacity(length, num_of_people, width = None):
-    
+def find_pool_capacity(length, num_of_people, width=None):
+
     # Опишите условие, когда передано отрицательное значение длины.
     if length < 0:
         length = -length
-    
-    # Опишите условие, когда передано отрицательное значение 
+
+    # Опишите условие, когда передано отрицательное значение
     # количества людей.
     if num_of_people < 0:
         num_of_people = -num_of_people
@@ -16,12 +16,15 @@ def find_pool_capacity(length, num_of_people, width = None):
         width = length
     elif width < 0:
         width = -width
- 
+
     square = width * length
-    if num_of_people / square <= 2 :
-        print('Бассейн площадью',str(square),'кв. м.','вмещает',str(num_of_people), 'чел.')
+    if num_of_people / square <= 2:
+        print('Бассейн площадью', str(square), 'кв. м.',
+              'вмещает', str(num_of_people), 'чел.')
     else:
-        print('Бассейн площадью',str(square),'кв. м.','не вмещает',str(num_of_people), 'чел.')
+        print('Бассейн площадью', str(square), 'кв. м.',
+              'не вмещает', str(num_of_people), 'чел.')
+
 
 # Проверьте работу функции, можете подставить свои значения.
 find_pool_capacity(2, 2)

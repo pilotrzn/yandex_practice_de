@@ -1,11 +1,11 @@
 # Вместо многоточия укажите необходимые параметры.
-def count_tiles(depth, length, width = None):
+def count_tiles(depth, length, width=None):
     # Опишите условие, когда ширина бассейна не указана.
     if width is None:
         width = length
-    
+
     # Посчитайте, сколько понадобится плиток для стенок и дна бассейна.
-    plit_cnt = 2 * (( length * depth ) + ( width * depth)) + length * width
+    plit_cnt = 2 * ((length * depth) + (width * depth)) + length * width
 
     # Верните результат работы функции.
     return plit_cnt

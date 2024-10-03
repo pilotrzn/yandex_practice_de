@@ -4,7 +4,6 @@ def pay_bills(month, bills):
         return bills[1:len(bills) - 1]
     else:
         return bills[::len(bills) - 1]
-    
 
 
 # Вызов функции:
