@@ -2,7 +2,7 @@
 def create_vegetable_info(vegetables, varieties, yields):
     # Ваш код здесь
     # z_var_yi = zip(varieties,yields)
-    z_veg_zip = zip(vegetables,zip(varieties,yields))
+    z_veg_zip = zip(vegetables, zip(varieties, yields))
     vegetable_info = dict(z_veg_zip)
     return vegetable_info
 

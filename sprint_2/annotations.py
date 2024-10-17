@@ -1,12 +1,12 @@
 from math import sqrt
-from typing import Optional
+from typing import Optional, Union
 
 
 def add_numbers(item1: int, item2: int) -> int:
     return item1 + item2
 
 
-def calculate_square_root(number: float) -> float:
+def calculate_square_root(number: Union[float, int]) -> float:
     return sqrt(number)
 
 

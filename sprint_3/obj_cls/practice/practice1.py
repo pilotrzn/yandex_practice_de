@@ -12,7 +12,7 @@ class BacteriaProducer:
         else:
             print('Нет места под новую бактерию')
 
-    # Допишите метод
+    # Допишите методl
     def remove_one(self):
         if self.bacteria_count > 0:
             self.bacteria_count -= 1
