@@ -1,7 +1,5 @@
 # game.py
-
 import pygame
-
 from gameparts import Board
 
 pygame.init()

@@ -121,15 +121,7 @@ def main():
 
                 clicked_row = mouse_x // CELL_SIZE
                 clicked_col = mouse_y // CELL_SIZE
-
-                # Сюда нужно дописать код:
-                # если ячейка свободна,
-                    # то сделать ход,
-                    # проверить на победу,
-                    # проверить на ничью,
-                    # сменить игрока. 
-                    ...
-                    draw_figures(game.board)
+                draw_figures(game.board)
         
         # Обновить окно игры.
         pygame.display.update()
