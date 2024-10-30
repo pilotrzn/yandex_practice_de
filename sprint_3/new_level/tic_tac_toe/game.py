@@ -2,6 +2,7 @@
 import pygame
 from gameparts import Board
 
+
 pygame.init()
 
 CELL_SIZE = 110
