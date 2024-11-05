@@ -4,15 +4,16 @@ races_data = [
     {'Ferrari': 20, 'Williams': 15, 'Aston Martin': 10, 'Mercedes': 5}
 ]
 
+
 def get_competition_data(races_data):
-        command_names = {}
-        command_scores = {}
-        for race in races_data:
-            for command,count in race.items():
-                if command not in command_names:
-                     command_names[command] = command
-                     command_scores[command] = 0
-                command_scores[command] += count
+    command_names = {}
+    command_scores = {}
+    for race in races_data:
+        for command, count in race.items():
+            if command not in command_names:
+                command_names[command] = command
+                command_scores[command] = 0
+            command_scores[command] += count
 
         #bubble sort
         winteam = None
