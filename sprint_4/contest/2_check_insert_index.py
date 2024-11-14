@@ -1,15 +1,10 @@
-import sys
-
-
-def index():
+def inputs() -> tuple[list[int], int]:
     probe_arr = list(map(int, input().strip().split()))
-    # probe_arr = [1, 5, 10, 11]
-    check_value = int(sys.stdin.readline().rstrip())
-    # check_value = 15
-    print(check_element_in_list(check_value, probe_arr))
+    check_value = int(input().strip())
+    return probe_arr, check_value
 
 
-def check_element_in_list(check_value: int, probe_arr: list) -> int:
+def check_element_in_list(probe_arr: list, check_value: int) -> int:
     first: int = 0
     last: int = len(probe_arr) - 1
     if check_value < probe_arr[first]:
@@ -25,4 +20,5 @@ def check_element_in_list(check_value: int, probe_arr: list) -> int:
 
 
 if __name__ == '__main__':
-    index()
+    probe_arr, check_value = inputs()
+    print(check_element_in_list(probe_arr, check_value))

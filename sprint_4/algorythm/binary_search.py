@@ -1,6 +1,6 @@
 wins = [1223125, 2128437, 2128500, 2741001, 4567687, 4567890, 7495938, 9314543]
 
-wins = [i for i in range(0, 1025)]
+# wins = [i for i in range(0, 1025)]
 
 
 def find_element(sorted_numbers, element):

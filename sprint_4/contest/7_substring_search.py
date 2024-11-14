@@ -1,5 +1,3 @@
-
-
 def substring_search(message):
     symb_count = 0
     finded = []

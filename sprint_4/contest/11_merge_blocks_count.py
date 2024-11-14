@@ -20,4 +20,3 @@ def merge_blocks_count(arr_list: list):
 if __name__ == '__main__':
     num, arr_list = inputs()
     print(merge_blocks_count(arr_list))
-

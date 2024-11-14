@@ -1,8 +1,5 @@
-import sys
-
-
 def duble():
-    length = int(sys.stdin.readline().rstrip())
+    length = int(input().strip())
     result = ['_'] * length
     probe_arr = list(input().strip().split())
     index = 0
@@ -10,9 +7,8 @@ def duble():
         if probe not in result:
             result[index] = probe
             index += 1
-
-    print(" ".join(str(result)))
+    return result
 
 
 if __name__ == '__main__':
-    duble()
+    print(*duble())

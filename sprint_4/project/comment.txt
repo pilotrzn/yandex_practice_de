@@ -1,2 +1,5 @@
 id посылки = 123761471
+
+Поправлены скрины
+
 google_doc = https://docs.google.com/document/d/1lJMxsBK2GK_tv-bZuPohJ8qCY_7R2xivdrGsLGRYFUM/edit?usp=sharing
