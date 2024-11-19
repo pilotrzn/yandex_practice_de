@@ -3,3 +3,10 @@
                            'password': 'f29a02ae8f8b4863b7c1df31206c6c23',
                            'port': 6432,
                            'user': 'de_start_20241114_8186acad5b'}}
+
+
+{'student_db_connection': {'dbname': 'playground_start_20241114_8186acad5b',
+                            'host': 'rc1a-098ppz48slkroxr7.mdb.yandexcloud.net',
+                            'password': 'f29a02ae8f8b4863b7c1df31206c6c23',
+                            'port': 6432,
+                            'user': 'de_start_20241114_8186acad5b'}}                           
