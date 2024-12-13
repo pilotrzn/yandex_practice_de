@@ -1,0 +1,18 @@
+|name_category|total_films|
+|-------------|-----------|
+|Sports       |67         |
+|Foreign      |64         |
+|Animation    |63         |
+|Documentary  |61         |
+|Family       |60         |
+|New          |60         |
+|Action       |58         |
+|Drama        |55         |
+|Games        |55         |
+|Classics     |52         |
+|Sci-Fi       |52         |
+|Children     |51         |
+|Travel       |51         |
+|Horror       |49         |
+|Comedy       |46         |
+|Music        |42         |
