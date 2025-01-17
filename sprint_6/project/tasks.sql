@@ -106,22 +106,64 @@ SELECT
 	pizza_price
 FROM menu_with_rank WHERE rn = 1;
 
+
+BEGIN;
+
+--LOCK TABLE cafe.restaurants;
+--
+--SELECT r.restaurant_uuid 
+--FROM cafe.restaurants r 
+--WHERE r.restaurant_menu #>> '{Напиток,Кофе}' IS NOT NULL 
+--FOR UPDATE;
+
 WITH drinks AS (
 SELECT 
 	r.restaurant_uuid,
-	(jsonb_each_text(r.restaurant_menu -> 'Напиток')).key drink_name,
-	(jsonb_each_text(r.restaurant_menu -> 'Напиток')).value  drink_price
-FROM cafe.restaurants r)
+	r.restaurant_menu #>> '{Напиток,Кофе}'  drink_price
+FROM cafe.restaurants r 
+WHERE r.restaurant_menu #>> '{Напиток,Кофе}' IS NOT NULL
+FOR UPDATE
+)
 ,prices as(
 	SELECT 
 		restaurant_uuid,
-		drink_name,
-		(drink_price::integer * ( 1 + (20::numeric /100)))::integer::text new_price
+		drink_price,
+		(drink_price::integer * ( 1 + (20::numeric / 100)))::integer::text new_price
 	FROM drinks
-	WHERE drink_name = 'Кофе'
 )
 UPDATE cafe.restaurants r
-SET restaurant_menu = jsonb_set(restaurant_menu::jsonb, '{Напиток,Кофе}', p.new_price::TEXT::jsonb)
+SET restaurant_menu = jsonb_set(restaurant_menu::jsonb, '{Напиток,Кофе}', p.new_price::jsonb)
 FROM prices p 
 WHERE p.restaurant_uuid = r.restaurant_uuid 
-RETURNING *;
+RETURNING r.*;
+
+COMMIT;
+
+
+BEGIN;
+
+LOCK TABLE cafe.managers IN ACCESS EXCLUSIVE MODE;
+
+ALTER TABLE cafe.managers ADD COLUMN manager_phones varchar[];
+
+WITH managers_order AS (
+SELECT 
+	row_number() OVER (ORDER BY m.manager_name) rn,
+	m.manager_uuid,
+	m.manager_phone
+FROM cafe.managers m)
+,phone_arr as(
+	SELECT 
+		ARRAY[concat('8-800-2500-',100 + rn) ,manager_phone] phone_arr,
+		manager_uuid
+	FROM managers_order
+)
+UPDATE cafe.managers m
+SET manager_phones = pa.phone_arr
+FROM phone_arr  pa
+WHERE m.manager_uuid = pa.manager_uuid
+RETURNING  m.*;
+
+ALTER TABLE cafe.managers DROP COLUMN manager_phone;
+
+COMMIT;
