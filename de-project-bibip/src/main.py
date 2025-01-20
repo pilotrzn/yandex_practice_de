@@ -24,7 +24,11 @@ if __name__ == '__main__':
     available_cars = instance.get_cars(CarStatus.available)
 
     car_info = instance.get_car_info("KNAGM4A77D5316538")
-
+    car_info = instance.get_car_info("UPDGM4A77D5316538")
     instance.update_vin("KNAGM4A77D5316538", "UPDGM4A77D5316538")
+
+    removed = instance.revert_sale("20240903#KNAGM4A77D5316538")
+    
+    top = instance.top_models_by_sales()
 
     print()

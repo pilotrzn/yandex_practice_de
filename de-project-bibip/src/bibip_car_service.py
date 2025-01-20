@@ -43,19 +43,26 @@ class CarService:
             index_field=model.id)
 
     def add_car(self, car: Car):
-        self.__insert(DBF[CARS], car.make_string(), car.vin)
+        self.__insert(
+            DBF[CARS],
+            car.make_string(),
+            car.vin)
 
     # Задание 2. Сохранение продаж.
     def sell_car(self, sale: Sale) -> Car:
         self.__insert(
-                DBF[SALES], sale.make_string(), sale.sales_number)
+                DBF[SALES],
+                sale.make_string(),
+                sale.sales_number)
         # поиск
-        current_record, line = self.__get_data_by_field(
-                                                DBF[CARS], sale.car_vin)
-        current_car = Car.make_object_from_record(current_record)
-        if current_car:
-            current_car.status = CarStatus('sold')
-            self.__update(DBF[CARS], current_car.make_string(), line)
+        data = self.__get_data_by_field(DBF[CARS], sale.car_vin)
+        if data is None:
+            return None
+        record, line = data
+        car = Car.make_object_from_record(record)
+        if car:
+            car.status = CarStatus('sold')
+            self.__update(DBF[CARS], car.make_string(), line)
 
     # Задание 3. Доступные к продаже
     def get_cars(self, status: CarStatus) -> list[Car]:
@@ -64,18 +71,25 @@ class CarService:
             for line in f:
                 if status in line:
                     cars.append(Car.make_object_from_record(line))
-        return sorted(cars, key=lambda car: car.vin)
+        return cars
+        # return sorted(cars, key=lambda car: car.vin)
 
     # Задание 4. Детальная информация
     def get_car_info(self, vin: str) -> CarFullInfo | None:
+        # defaults
         sales_date: datetime | None = None
         sales_cost: Decimal | None = None
-        # принимаем вин
-        car_record, _ = self.__get_data_by_field(DBF[CARS], vin)
+        # принимаем виню обрабатываем в объект, на случай если не существует
+        data = self.__get_data_by_field(DBF[CARS], vin)
+        if data is None:
+            return None
+        car_record, _ = data
         car = Car.make_object_from_record(car_record)
         if car:
-            model_record, _ = self.__get_data_by_field(
-                DBF[MODELS], car.model)
+            data = self.__get_data_by_field(DBF[MODELS], car.model)
+            if data is None:
+                return None
+            model_record, _ = data
             model = Model.make_object_from_record(model_record)
         # если статус машины продана-ищем данные о продаже
         if car.status == CarStatus.sold:
@@ -98,21 +112,81 @@ class CarService:
 
     # Задание 5. Обновление ключевого поля
     def update_vin(self, vin: str, new_vin: str) -> Car:
-        record, line = self.__get_data_by_field(DBF[CARS], vin)
+        data = self.__get_data_by_field(DBF[CARS], vin)
+        if data is None:
+            return None
+        record, line = data
         car = Car.make_object_from_record(record)
         car.vin = new_vin
-
         self.__update(DBF[CARS], car.make_string(), line)
-        # придумать
         self.__index_build(DBF[CARS], new_vin, vin, line)
 
     # Задание 6. Удаление продажи
     def revert_sale(self, sales_number: str) -> Car:
-        raise NotImplementedError
+        # ищем продажу по индексу
+        data = self.__get_data_by_field(DBF[SALES], sales_number)
+        if data is None:
+            return None
+        sale_record, sale_line = data
+        sale = Sale.make_object_from_record(sale_record)
+        vin = sale.car_vin
+        # машину по найденному вин из продаж
+        data = self.__get_data_by_field(DBF[CARS], vin)
+        if data is None:
+            return None
+        # обновление статуса машины
+        car_rec, car_line = data
+        car = Car.make_object_from_record(car_rec)
+        car.status = CarStatus.available
+        self.__update(DBF[CARS], car.make_string(), car_line)
+        # удаление записи из файла
+        sale.is_deleted = True
+        self.__update(DBF[SALES], sale.make_string(), sale_line)
+        # обновление индекса продаж
+        self.__index_build(
+            file_name=DBF[SALES],
+            value=sales_number,
+            line_number=sale_line)
+        return car
 
     # Задание 7. Самые продаваемые модели
     def top_models_by_sales(self) -> list[ModelSaleStats]:
-        raise NotImplementedError
+        d_model_sale: dict[int, int] = {}
+        for value in self.__index_array[DBF[SALES]]:
+            data = self.__get_data_by_field(DBF[SALES], value)
+            if data is None:
+                continue
+            record, _ = data
+            sale = Sale.make_object_from_record(record)
+            data = self.__get_data_by_field(DBF[CARS], sale.car_vin)
+            if data is not None:
+                car_record, _ = data
+                car_model_id = Car.make_object_from_record(car_record).model
+            if car_model_id in d_model_sale:
+                d_model_sale[car_model_id] = d_model_sale[car_model_id] + 1
+            else:
+                d_model_sale[car_model_id] = 1
+
+        top_models = sorted(
+                d_model_sale.items(),
+                key=lambda item: item[1],
+                reverse=True)[:3]
+
+        dict_top_models: list[ModelSaleStats] = []
+
+        for model_id, count in top_models:
+            data = self.__get_data_by_field(DBF[MODELS], model_id)
+            if data:
+                record, _ = data
+                model = Model.make_object_from_record(record)
+                dict_top_models.append(
+                    ModelSaleStats(
+                        car_model_name=model.name,
+                        brand=model.brand,
+                        sales_number=count
+                    )
+                )
+        return dict_top_models
 
     # форматирование строки для вставки
     def __create_record(self, str_len: int, tuple: tuple) -> str:
@@ -132,13 +206,17 @@ class CarService:
             value: int | str,
             old_value: int | str = None,
             line_number: int = None) -> None:
-        dict = self.__index_array[file_name]
+        dict: SortedDict = self.__index_array[file_name]
+
+        if old_value is None and line_number is not None:
+            dict.pop(value)
+        elif old_value is None:
+            dict[value] = len(dict)
+        elif old_value is not None and line_number is not None:
+            dict.pop(old_value)
+            dict[value] = line_number
+
         with open(f'{self.root_directory_path}/{file_name}_index', "w") as f:
-            if old_value is None:
-                dict[value] = len(dict)
-            elif old_value is not None and line_number is not None:
-                dict.pop(old_value)
-                dict[value] = line_number
             arr = []
             for i in dict.items():
                 str = self.__create_record(
@@ -157,7 +235,10 @@ class CarService:
             return f.read(self.__extend_file_size)
 
     def __get_data_by_field(
-            self, file_name: str, field: str | int) -> tuple[tuple, int]:
+            self,
+            file_name: str,
+            field: str | int
+            ) -> tuple[tuple, int] | None:
         line = self.__get_line_from_index(field, self.__index_array[file_name])
         if line is not None:
             record = self.__get_record_by_line(line, DBF[file_name])
@@ -165,7 +246,10 @@ class CarService:
 
     # имитация SELECT
     def __get_data_sec_scan(
-            self, file_name: str, search_value: str | int) -> tuple | None:
+            self,
+            file_name: str,
+            search_value: str | int
+            ) -> tuple | None:
         with open(f'{self.root_directory_path}/{file_name}', "r") as f:
             for line in f:
                 if search_value in line:

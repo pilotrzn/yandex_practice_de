@@ -63,12 +63,19 @@ class Sale(BaseModel):
     car_vin: str
     sales_date: datetime
     cost: Decimal
+    is_deleted: bool = False
 
     def index(self) -> str:
         return self.car_vin
 
     def make_string(self):
-        return (self.sales_number, self.car_vin, self.sales_date, self.cost)
+        return (
+            self.sales_number,
+            self.car_vin,
+            self.sales_date,
+            self.cost,
+            self.is_deleted
+            )
 
     @classmethod
     def make_object_from_record(cls, record: str):
@@ -77,7 +84,8 @@ class Sale(BaseModel):
             sales_number=data[0],
             car_vin=data[1],
             sales_date=datetime.strptime(data[2], '%Y-%m-%d %X'),
-            cost=Decimal(data[3])
+            cost=Decimal(data[3]),
+            is_deleted=bool(data[4])
         )
 
 
