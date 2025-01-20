@@ -1,23 +1,30 @@
 import os
 from bibip_car_service import CarService
+from models import CarStatus
+from raw_data import model_data, car_data, sales_data
 
 
 root_dir = 'database'
 
 
-def initialize() -> CarService:
+if __name__ == '__main__':
     parent_dir = os.path.dirname(os.path.realpath(__file__))
     dir_path = f'{os.path.dirname(parent_dir)}/{root_dir}'
-    create_folder(dir_path=dir_path)
-    cs = CarService(dir_path)
-    return cs
+    instance = CarService(dir_path)
 
+    for model in model_data():
+        instance.add_model(model)
 
-def create_folder(dir_path: str):
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path, exist_ok=True)
+    for car in car_data():
+        instance.add_car(car)
 
+    for sale in sales_data():
+        instance.sell_car(sale)
 
-if __name__ == '__main__':
-    instance = initialize()
-    instance.add_car()
+    available_cars = instance.get_cars(CarStatus.available)
+
+    car_info = instance.get_car_info("KNAGM4A77D5316538")
+
+    instance.update_vin("KNAGM4A77D5316538", "UPDGM4A77D5316538")
+
+    print()

@@ -22,6 +22,20 @@ class Car(BaseModel):
     def index(self) -> str:
         return self.vin
 
+    def make_string(self):
+        return (self.vin, self.model, self.price, self.date_start, self.status)
+
+    @classmethod
+    def make_object_from_record(cls, record: str):
+        data = record.strip().split(";")
+        return cls(
+            vin=data[0],
+            model=int(data[1]),
+            price=Decimal(data[2]),
+            date_start=datetime.strptime(data[3], '%Y-%m-%d %X'),
+            status=CarStatus(data[4])
+        )
+
 
 class Model(BaseModel):
     id: int
@@ -30,6 +44,18 @@ class Model(BaseModel):
 
     def index(self) -> str:
         return str(self.id)
+
+    def make_string(self):
+        return (self.id, self.name, self.brand)
+
+    @classmethod
+    def make_object_from_record(cls, record: str):
+        data = record.strip().split(";")
+        return cls(
+            id=int(data[0]),
+            name=data[1],
+            brand=data[2]
+        )
 
 
 class Sale(BaseModel):
@@ -40,6 +66,19 @@ class Sale(BaseModel):
 
     def index(self) -> str:
         return self.car_vin
+
+    def make_string(self):
+        return (self.sales_number, self.car_vin, self.sales_date, self.cost)
+
+    @classmethod
+    def make_object_from_record(cls, record: str):
+        data = record.strip().split(";")
+        return cls(
+            sales_number=data[0],
+            car_vin=data[1],
+            sales_date=datetime.strptime(data[2], '%Y-%m-%d %X'),
+            cost=Decimal(data[3])
+        )
 
 
 class CarFullInfo(BaseModel):
