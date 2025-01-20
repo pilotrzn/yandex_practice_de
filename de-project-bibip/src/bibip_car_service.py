@@ -104,7 +104,7 @@ class CarService:
 
         self.__update(DBF[CARS], car.make_string(), line)
         # придумать
-        self.__index_update(DBF[CARS], line, vin, new_vin)
+        self.__index_build(DBF[CARS], new_vin, vin, line)
 
     # Задание 6. Удаление продажи
     def revert_sale(self, sales_number: str) -> Car:
@@ -114,7 +114,7 @@ class CarService:
     def top_models_by_sales(self) -> list[ModelSaleStats]:
         raise NotImplementedError
 
-    # форматироввание строки для вставки
+    # форматирование строки для вставки
     def __create_record(self, str_len: int, tuple: tuple) -> str:
         result = ''
         for value in tuple:
@@ -126,10 +126,19 @@ class CarService:
             f.write(data)
 
     # index rebuild
-    def __insert_into_index(self, file_name: str, element: int | str) -> None:
+    def __index_build(
+            self,
+            file_name: str,
+            value: int | str,
+            old_value: int | str = None,
+            line_number: int = None) -> None:
         dict = self.__index_array[file_name]
         with open(f'{self.root_directory_path}/{file_name}_index', "w") as f:
-            dict[element] = len(dict)
+            if old_value is None:
+                dict[value] = len(dict)
+            elif old_value is not None and line_number is not None:
+                dict.pop(old_value)
+                dict[value] = line_number
             arr = []
             for i in dict.items():
                 str = self.__create_record(
@@ -166,22 +175,10 @@ class CarService:
     def __insert(self, file_name: str, data: str, index_field: int | str):
         self.__insert_into_file(
             file_name, self.__create_record(self.__extend_file_size, data))
-        self.__insert_into_index(file_name, index_field)
+        self.__index_build(file_name, index_field)
 
     # имитация UPDATE
     def __update(self, file_name: str, data: str, line_number: int):
         with open(f'{self.root_directory_path}/{file_name}', "r+") as f:
             f.seek(line_number * (self.__extend_file_size + 1))
             f.write(self.__create_record(self.__extend_file_size, data))
-
-    def __index_update(
-                self,
-                file_name: str,
-                line_number: int,
-                old_val: int | str,
-                new_val: int | str):
-        with open(f'{self.root_directory_path}/{file_name}_index', "r+") as f:
-            f.seek(line_number * (self.__extend_index_size + 1))
-            f.write(self.__create_record(self.__extend_index_size, new_val))
-        self.__index_array[file_name].pop(old_val)
-        self.__insert_into_index(file_name, new_val)
