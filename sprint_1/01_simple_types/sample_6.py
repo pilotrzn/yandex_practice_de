@@ -16,9 +16,9 @@ print('Вместо -100 -', bool(int_negative))  # Приводим число 
 print('Вместо 3.14 -', bool(float_pi))      # Приводим число к bool.
 
 
-
 def rectangle_area(length, width):
     return length * width
+
 
 area_1 = rectangle_area(5, 10)
 area_2 = rectangle_area(7, 7)

@@ -1,6 +1,6 @@
 apples_by_day = [61, 58, 56, 34, 67, 50, 74, 64, 78, 69]
 # Распакуйте список в набор переменных
-ap0,ap1,ap2,ap3,ap4,ap5,ap6,ap7,ap8,ap9 = apples_by_day
+ap0, ap1, ap2, ap3, ap4, ap5, ap6, ap7, ap8, ap9 = apples_by_day
 
 # Напечатайте значения первой и последней переменных.
 print(ap0, ap9)

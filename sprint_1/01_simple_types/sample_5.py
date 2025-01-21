@@ -1,6 +1,7 @@
 length = 5
 width = 10
 
+
 def rectangle_area(length, width):
     area = length * width  # Вычислил, но не вернул!
 

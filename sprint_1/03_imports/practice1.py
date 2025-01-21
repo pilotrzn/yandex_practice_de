@@ -1,5 +1,6 @@
 from datetime import datetime as dt, timedelta as td
 
+
 def get_weekday_name(weekday_number):
     if weekday_number == 0:
         return 'понедельник'
@@ -16,13 +17,15 @@ def get_weekday_name(weekday_number):
     elif weekday_number == 6:
         return 'воскресенье'
 
+
 def get_day_after_tomorrow(date_string):
     # Напишите код функции.
     format = '%Y-%m-%d'
     current_day = dt.strptime(date_string, format)
     week_day = get_weekday_name(current_day.weekday())
     after_tomorrow = get_weekday_name((current_day + td(days=2)).weekday())
-    print('Сегодня {0}, {1}, а послезавтра будет {2}'.format(date_string, week_day, after_tomorrow))
+    print('Сегодня {0}, {1}, а послезавтра будет {2}'.format(
+            date_string, week_day, after_tomorrow))
 
 
 # Проверьте работу программы, можете подставить свои значения.
