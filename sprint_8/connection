@@ -1,0 +1,6 @@
+Параметры подключения:
+{'student_db_connection': {'dbname': 'playground_sp1_20250130_6640bf9a18',
+                           'host': 'rc1b-ibh8zlbmuynmtr4i.mdb.yandexcloud.net',
+                           'password': '5abff0223621483cad534b43f0c58e6e',
+                           'port': 6432,
+                           'user': 'de_sp1_20250130_6640bf9a18'}}
