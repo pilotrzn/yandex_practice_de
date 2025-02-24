@@ -21,7 +21,7 @@ class CarService:
     def __init__(self, root_directory_path: str) -> None:
         self.root_directory_path = root_directory_path
         self.__extend_file_size = 500
-        self.__extend_index_size = 20
+        self.__extend_index_size = 50
         self.__index_array = {}
         # создание каталога бд
         if os.path.exists(self.root_directory_path):
