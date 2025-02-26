@@ -34,7 +34,10 @@ INNER JOIN dwh.d_craftsman dc ON fo.craftsman_id  = dc.craftsman_id
 INNER JOIN dwh.d_customer dcs ON fo.customer_id  = dcs.customer_id  
 INNER JOIN dwh.d_product dp ON dp.product_id  = fo.product_id 
 LEFT JOIN dwh.load_dates_craftsman_report_datamart crd ON crd.id = dc.craftsman_id 
-WHERE fo.load_dttm > (SELECT COALESCE(MAX(load_dttm),'1900-01-01') FROM dwh.load_dates_craftsman_report_datamart)
+WHERE fo.load_dttm > (SELECT COALESCE(MAX(load_dttm),'1900-01-01') FROM dwh.load_dates_craftsman_report_datamart)) OR
+                            (dc.load_dttm > (SELECT COALESCE(MAX(load_dttm),'1900-01-01') FROM dwh.load_dates_craftsman_report_datamart)) OR
+                            (dcs.load_dttm > (SELECT COALESCE(MAX(load_dttm),'1900-01-01') FROM dwh.load_dates_craftsman_report_datamart)) OR
+                            (dp.load_dttm > (SELECT COALESCE(MAX(load_dttm),'1900-01-01') FROM dwh.load_dates_craftsman_report_datamart))
 );
 
 --3
