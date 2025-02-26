@@ -21,6 +21,7 @@ CREATE TABLE dwh.customer_report_datamart (
 	CONSTRAINT customer_report_datamart_pk PRIMARY KEY (id)
 );
 
+--таблица инкрементальных загрузок
 
 CREATE TABLE IF NOT EXISTS dwh.load_dates_customer_report_datamart (
     id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
