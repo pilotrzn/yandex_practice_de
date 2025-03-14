@@ -1,0 +1,15 @@
+volumes:
+  ya_project:
+networks:
+  custom_net:
+
+services:
+  de-sprint:
+    image: cr.yandex/crp1r8pht0n0gl25aug1/de-sprint-1-v2:latest
+    # restart: always
+    volumes:
+      - ya_project:s1-lessons
+    ports:
+      - 7010:8000
+    networks:
+      - custom_net
