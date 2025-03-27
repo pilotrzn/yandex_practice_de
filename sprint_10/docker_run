@@ -1,3 +1,6 @@
 docker run --rm -d -p 7010:8000 --name de-sprint-1-server-local cr.yandex/crp1r8pht0n0gl25aug1/de-sprint-1-v2:latest -v s1-lessons:/s1-lessons
 
 docker network create -d bridge --subnet 172.36.0.1/24 custom_net
+
+
+docker compose -f ya-docker-compose.yaml up -d airflow-webserver airflow-scheduler airflow-worker airflow-triggerer vsc
