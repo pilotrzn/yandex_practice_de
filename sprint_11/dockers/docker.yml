@@ -1,0 +1,13 @@
+volumes:
+  ya_project:
+
+services:
+  de-sprint11:
+    image: cr.yandex/crp1r8pht0n0gl25aug1/de-sprint-1-v2:latest
+    container_name: sprint_11
+    # restart: always
+    volumes:
+      - ya_project:/lessons
+    ports:
+      - 3000:3000
+      - 15432:5432
