@@ -1,0 +1,54 @@
+Для подключения по SSH используйте имя пользователя yc-user и приватный ключ, который я отправлю в следующем сообщении.
+
+В веб-интерфейсах, требующих авторизации, используйте:
+- Логин: pilotryaza
+- Пароль: XNhH3n3uUds4001yqzOP
+
+158.160.118.148
+
+Детали инфраструктуры:
+- IP-адрес: 51.250.2.69
+- Jupyter Notebook (http://158.160.118.148:8888/)
+- Airflow (http://51.250.2.69:3000/airflow/)
+- HDFS Namenode (http://158.160.117.189:9870/)
+- Spark History Server (http://158.160.117.189:18080/)
+- YARN Resource Manager (http://158.160.117.189:8088/)
+- JobHistory Server (http://158.160.117.189:8188/)
+
+# запускать для подключения, это тоннель
+ssh -i /home/aavdonin/.ssh/ssh_private_key -ND 8157 yc-user@158.160.118.148
+
+
+
+docker inspect 499266dc42dd | jq -r '.[0] | ["docker run"] + 
+    ( .Config.Entrypoint // ["(default entrypoint)"] | map("--entrypoint=" + .) ) +
+    ( .HostConfig.PortBindings | to_entries | map(" -p " + .key + ":" + (.value[0].HostPort // "") ) ) +
+    ( .HostConfig.Binds | map(" -v " + .) ) +
+    ( .Config.Env | map(" -e " + .) ) +
+    [.Config.Image] | join(" ")'
+
+    docker inspect 499266dc42dd --format '
+version: "3.8"
+services:
+  my_service:
+    image: {{.Config.Image}}
+    ports: {{json .NetworkSettings.Ports}}
+    volumes: {{json .HostConfig.Binds}}
+    environment: {{json .Config.Env}}
+' > docker-compose.yml
+
+
+version: "3.8"
+services:
+  my_service:
+    image: cr.yandex/crp10b0j4b07oirst61i/student-sp7-1-pilotryaza-0:latest
+    environment:["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+"INTERPRETER_NAME=python3",
+"SCRIPT_NAME=__test.py",
+"TEMPLATE_FILENAME=template.py",
+"PG_VERSION=13",
+"AIRFLOW__CORE__LOAD_EXAMPLES=False",
+"AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS=False",
+"AIRFLOW_HOME=/opt/airflow",
+"SPARK_USERNAME=pilotryaza",
+"JUPYTER_PASSWORD=XNhH3n3uUds4001yqzOP"]
