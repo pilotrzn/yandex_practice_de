@@ -12,7 +12,7 @@
 - Airflow (http://51.250.2.69:3000/airflow/)
 - HDFS Namenode (http://158.160.117.189:9870/)
 - Spark History Server (http://158.160.117.189:18080/)
-- YARN Resource Manager (http://158.160.117.189:8088/)
+- YARN Resource Manager (http://158.160.99.86:8088/)
 - JobHistory Server (http://158.160.117.189:8188/)
 
 # запускать для подключения, это тоннель
