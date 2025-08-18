@@ -1,0 +1,78 @@
+Application application_1729228596238_45848 failed 2 times due to AM Container for appattempt_1729228596238_45848_000002 exited with exitCode: 13
+Failing this attempt.Diagnostics: [2025-05-30 14:42:55.286]Exception from container-launch.
+Container id: container_1729228596238_45848_02_000001
+Exit code: 13
+[2025-05-30 14:42:55.287]Container exited with a non-zero exit code 13. Error file: prelaunch.err.
+Last 4096 bytes of prelaunch.err :
+Last 4096 bytes of stderr :
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+25/05/30 14:42:51 INFO SignalUtils: Registering signal handler for TERM
+25/05/30 14:42:51 INFO SignalUtils: Registering signal handler for HUP
+25/05/30 14:42:51 INFO SignalUtils: Registering signal handler for INT
+25/05/30 14:42:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+25/05/30 14:42:53 INFO ApplicationMaster: ApplicationAttemptId: appattempt_1729228596238_45848_000002
+25/05/30 14:42:53 INFO ApplicationMaster: Starting the user application in a separate Thread
+25/05/30 14:42:53 INFO ApplicationMaster: Waiting for spark context initialization...
+25/05/30 14:42:54 ERROR ApplicationMaster: User application exited with status 1
+25/05/30 14:42:54 INFO ApplicationMaster: Final app status: FAILED, exitCode: 13, (reason: User application exited with status 1)
+25/05/30 14:42:55 ERROR ApplicationMaster: Uncaught exception:
+org.apache.spark.SparkException: Exception thrown in awaitResult:
+at org.apache.spark.util.SparkThreadUtils$.awaitResult(SparkThreadUtils.scala:56)
+at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:310)
+at org.apache.spark.deploy.yarn.ApplicationMaster.runDriver(ApplicationMaster.scala:506)
+at org.apache.spark.deploy.yarn.ApplicationMaster.run(ApplicationMaster.scala:265)
+at org.apache.spark.deploy.yarn.ApplicationMaster$$anon$3.run(ApplicationMaster.scala:934)
+at org.apache.spark.deploy.yarn.ApplicationMaster$$anon$3.run(ApplicationMaster.scala:933)
+at java.security.AccessController.doPrivileged(Native Method)
+at javax.security.auth.Subject.doAs(Subject.java:422)
+at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1878)
+at org.apache.spark.deploy.yarn.ApplicationMaster$.main(ApplicationMaster.scala:933)
+at org.apache.spark.deploy.yarn.ApplicationMaster.main(ApplicationMaster.scala)
+Caused by: org.apache.spark.SparkUserAppException: User application exited with 1
+at org.apache.spark.deploy.PythonRunner$.main(PythonRunner.scala:104)
+at org.apache.spark.deploy.PythonRunner.main(PythonRunner.scala)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.apache.spark.deploy.yarn.ApplicationMaster$$anon$2.run(ApplicationMaster.scala:738)
+25/05/30 14:42:55 INFO ApplicationMaster: Deleting staging directory hdfs://rc1a-dataproc-m-dg5lgqqm7jju58f9.mdb.yandexcloud.net/user/pilotryaza/.sparkStaging/application_1729228596238_45848
+25/05/30 14:42:55 INFO ShutdownHookManager: Shutdown hook called
+[2025-05-30 14:42:55.289]Container exited with a non-zero exit code 13. Error file: prelaunch.err.
+Last 4096 bytes of prelaunch.err :
+Last 4096 bytes of stderr :
+Using Spark's default log4j profile: org/apache/spark/log4j2-defaults.properties
+25/05/30 14:42:51 INFO SignalUtils: Registering signal handler for TERM
+25/05/30 14:42:51 INFO SignalUtils: Registering signal handler for HUP
+25/05/30 14:42:51 INFO SignalUtils: Registering signal handler for INT
+25/05/30 14:42:53 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+25/05/30 14:42:53 INFO ApplicationMaster: ApplicationAttemptId: appattempt_1729228596238_45848_000002
+25/05/30 14:42:53 INFO ApplicationMaster: Starting the user application in a separate Thread
+25/05/30 14:42:53 INFO ApplicationMaster: Waiting for spark context initialization...
+25/05/30 14:42:54 ERROR ApplicationMaster: User application exited with status 1
+25/05/30 14:42:54 INFO ApplicationMaster: Final app status: FAILED, exitCode: 13, (reason: User application exited with status 1)
+25/05/30 14:42:55 ERROR ApplicationMaster: Uncaught exception:
+org.apache.spark.SparkException: Exception thrown in awaitResult:
+at org.apache.spark.util.SparkThreadUtils$.awaitResult(SparkThreadUtils.scala:56)
+at org.apache.spark.util.ThreadUtils$.awaitResult(ThreadUtils.scala:310)
+at org.apache.spark.deploy.yarn.ApplicationMaster.runDriver(ApplicationMaster.scala:506)
+at org.apache.spark.deploy.yarn.ApplicationMaster.run(ApplicationMaster.scala:265)
+at org.apache.spark.deploy.yarn.ApplicationMaster$$anon$3.run(ApplicationMaster.scala:934)
+at org.apache.spark.deploy.yarn.ApplicationMaster$$anon$3.run(ApplicationMaster.scala:933)
+at java.security.AccessController.doPrivileged(Native Method)
+at javax.security.auth.Subject.doAs(Subject.java:422)
+at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1878)
+at org.apache.spark.deploy.yarn.ApplicationMaster$.main(ApplicationMaster.scala:933)
+at org.apache.spark.deploy.yarn.ApplicationMaster.main(ApplicationMaster.scala)
+Caused by: org.apache.spark.SparkUserAppException: User application exited with 1
+at org.apache.spark.deploy.PythonRunner$.main(PythonRunner.scala:104)
+at org.apache.spark.deploy.PythonRunner.main(PythonRunner.scala)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.apache.spark.deploy.yarn.ApplicationMaster$$anon$2.run(ApplicationMaster.scala:738)
+25/05/30 14:42:55 INFO ApplicationMaster: Deleting staging directory hdfs://rc1a-dataproc-m-dg5lgqqm7jju58f9.mdb.yandexcloud.net/user/pilotryaza/.sparkStaging/application_1729228596238_45848
+25/05/30 14:42:55 INFO ShutdownHookManager: Shutdown hook called
+For more detailed output, check the application tracking page: http://rc1a-dataproc-m-dg5lgqqm7jju58f9.mdb.yandexcloud.net:8188/applicationhistory/app/application_1729228596238_45848 Then click on links to logs of each attempt.
+. Failing the application.

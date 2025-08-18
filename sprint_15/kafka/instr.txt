@@ -1,0 +1,27 @@
+mkdir -p /usr/local/share/ca-certificates/Yandex && \
+wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" \
+   --output-document /usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt && \
+chmod 0655 /usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt
+
+
+sudo apt update && sudo apt install --yes kafkacat
+
+kafkacat -C \
+         -b rc1b-lsg5qa80e53hscub.mdb.yandexcloud.net:9091 \
+         -t order-service_orders \
+         -X security.protocol=SASL_SSL \
+         -X sasl.mechanism=SCRAM-SHA-512 \
+         -X sasl.username="producer_consumer" \
+         -X sasl.password="2xY5fjrpenZkgMwomS2H" \
+         -X ssl.ca.location=/home/aavdonin/git/yandex_practice_de/sprint_15/kafka/YandexInternalRootCA.crt -Z -K:
+
+
+echo "test message" | kafkacat -P \
+    -b rc1b-lsg5qa80e53hscub.mdb.yandexcloud.net:9091 \
+    -t <имя топика> \
+    -k key \
+    -X security.protocol=SASL_SSL \
+    -X sasl.mechanism=SCRAM-SHA-512 \
+    -X sasl.username="<логин производителя>" \
+    -X sasl.password="<пароль производителя>" \
+    -X ssl.ca.location=/usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt -Z
