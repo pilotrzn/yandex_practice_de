@@ -1,0 +1,4 @@
+select item_id, item_name 
+from stage.user_order_log
+where item_id not in (select item_id from mart.d_item)
+group by item_id, item_name;
